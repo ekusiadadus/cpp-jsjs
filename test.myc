@@ -1,0 +1,3 @@
+void main(void){
+    printf("Hello, it has been %d years since I learned C++", 2022-2010);
+}
