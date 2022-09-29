@@ -135,8 +135,8 @@ namespace simpleparser {
     token.mText.erase();
   }
 
-  void Token::DebugPrint() const {
-    cout << "Token: " << mText << " Type: " << mType << " Line: " << mLineNumber << endl;
+  void Token::debugPrint() const {
+    cout << "Token( " << sTokenTypeStrings[mType] << " \" " << mText << " \" " <<" Line: " << mLineNumber << ")" << endl;
   }
 
 }// namespace simpleparser

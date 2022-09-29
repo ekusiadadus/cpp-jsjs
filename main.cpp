@@ -24,7 +24,7 @@ int main() {
   vector<Token> tokens = tokenizer.parse(fileContents);
 
   for (auto &token: tokens) {
-    token.DebugPrint();
+    token.debugPrint();
   }
 
   return 0;
