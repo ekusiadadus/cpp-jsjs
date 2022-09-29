@@ -27,6 +27,12 @@ namespace simpleparser {
           default:
             throw runtime_error("Invalid escape sequence" + string(1, currCh) + " in string on line: " + to_string(currentToken.mLineNumber));
         }
+        currentToken.mType = STRING_LITERAL;
+        continue;
+      }else if(currentToken.mType == POTENTIAL_COMMENT && currCh != '/'){
+        currentToken.mType = OPERATOR;
+        endToken(currentToken, tokens);
+        continue;
       }
       switch (currCh) {
         case '0':
@@ -120,6 +126,7 @@ namespace simpleparser {
     }
     return tokens;
   }
+
   void Tokenizer::endToken(Token &token, vector<Token> &tokens) {
     if (token.mType != WHITESPACE) {
       tokens.push_back(token);
@@ -127,4 +134,9 @@ namespace simpleparser {
     token.mType = WHITESPACE;
     token.mText.erase();
   }
+
+  void Token::DebugPrint() const {
+    cout << "Token: " << mText << " Type: " << mType << " Line: " << mLineNumber << endl;
+  }
+
 }// namespace simpleparser

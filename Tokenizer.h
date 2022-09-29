@@ -9,6 +9,7 @@
 
 #include <string>
 #include <vector>
+#include<iostream>
 namespace simpleparser {
   using namespace std;
 
@@ -21,15 +22,30 @@ namespace simpleparser {
     OPERATOR,
     STRING_ESCAPE_SEQUENCE,
     POTENTIAL_DOUBLE,
+    POTENTIAL_COMMENT,
+    COMMENT,
+  };
+
+  static const char* sTokenTypeStrings[] = {
+    "WHITESPACE",// no token has ever this type
+    "IDENTIFIER",
+    "INTEGER_LITERAL",
+    "DOUBLE_LITERAL",
+    "STRING_LITERAL",
+    "OPERATOR",
+    "STRING_ESCAPE_SEQUENCE",
+    "POTENTIAL_DOUBLE",
+    "POTENTIAL_COMMENT",
+    "COMMENT",
   };
 
   class Token {
   public:
     enum TokenType mType { WHITESPACE };
     string mText;
-    size_t mStartOffset{0};
-    size_t mEndOffset{0};
     size_t mLineNumber{0};
+
+    void DebugPrint() const;
   };
   class Tokenizer {
   public:
