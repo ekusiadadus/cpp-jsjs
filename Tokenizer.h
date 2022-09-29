@@ -45,7 +45,7 @@ namespace simpleparser {
     string mText;
     size_t mLineNumber{0};
 
-    void DebugPrint() const;
+    void debugPrint() const;
   };
   class Tokenizer {
   public:
