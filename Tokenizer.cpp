@@ -101,8 +101,6 @@ namespace simpleparser {
           if (currentToken.mType != STRING_LITERAL) {
             endToken(currentToken, tokens);
             currentToken.mType = STRING_LITERAL;
-            currentToken.mText.append(1, currCh);
-            endToken(currentToken, tokens);
           } else if (currentToken.mType == STRING_LITERAL) {
             endToken(currentToken, tokens);
           }
@@ -120,7 +118,13 @@ namespace simpleparser {
           break;
 
         default:
-
+          if (currentToken.mType == WHITESPACE || currentToken.mType == INTEGER_LITERAL || currentToken.mType == DOUBLE_LITERAL){
+            endToken(currentToken, tokens);
+            currentToken.mType = IDENTIFIER;
+            currentToken.mText.append(1, currCh);
+          }else {
+            currentToken.mText.append(1, currCh);
+          }
           break;
       }
     }
