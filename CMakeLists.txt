@@ -3,4 +3,4 @@ project(untitled)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(untitled main.cpp Tokenizer.cpp Tokenizer.h)
+add_executable(untitled main.cpp Tokenizer.cpp Tokenizer.h Parser.cpp Parser.h)
