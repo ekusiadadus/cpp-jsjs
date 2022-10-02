@@ -1,3 +1,4 @@
+#include "Parser.h"
 #include "Tokenizer.h"
 #include <iostream>
 using namespace std;
@@ -6,7 +7,7 @@ using namespace simpleparser;
 int main() {
   std::cout << "simple parser 0.1" << std::endl;
 
-  FILE *fp = fopen("/Users/matsuri/CLionProjects/untitled/test.myc", "r");
+  FILE *fp = fopen("C:\\Users\\apoan\\CLionProjects\\cpp-jsj\\test.myc", "r");
   if (fp == nullptr) {
     std::cout << "Error opening file" << std::endl;
     return 1;
@@ -26,6 +27,9 @@ int main() {
   for (auto &token: tokens) {
     token.debugPrint();
   }
+
+  Parser parser;
+  parser.parse(tokens);
 
   return 0;
 }

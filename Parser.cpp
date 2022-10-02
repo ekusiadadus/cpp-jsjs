@@ -18,6 +18,7 @@ namespace simpleparser{
           optional<Token> possibleOperator = expectOperator("(");
           if (possibleOperator.has_value()){
             cout << "We have a function!" << possibleName->mText << ".";
+            exit(0);
           }
         }
       }
