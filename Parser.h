@@ -7,17 +7,22 @@
 #pragma once
 
 #include "Tokenizer.h"
+#include <optional>
 
-
-namespace simpleparser{
+namespace simpleparser {
   using namespace std;
   class Parser {
   public:
     void parse(vector<Token> &tokens);
+
+  private:
+    optional<Token> expectIdentifier(const string &name = string());
+    optional<Token> expectOperator(const string &name = string());
+    vector<Token>::iterator mCurrentToken;
+    vector<Token>::iterator mEndToken;
   };
 
-}
-
+}// namespace simpleparser
 
 
 #endif//UNTITLED_PARSER_H
