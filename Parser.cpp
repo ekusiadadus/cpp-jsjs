@@ -7,21 +7,37 @@
 
 namespace simpleparser {
   using namespace std;
+
+  bool Parser::expectFunctionDefinition(){
+    optional<Type> possibleType = expectType();
+    if (possibleType.has_value()) {
+      optional<Token> possibleName = expectIdentifier();
+      if (possibleName.has_value()) {
+        optional<Token> possibleOperator = expectOperator("(");
+        if (possibleOperator.has_value()) {
+          cout << "We have a function: " << possibleName->mText << ".";
+          return true;
+        } else {
+          --mCurrentToken;
+          --mCurrentToken;
+        }
+      } else {
+        --mCurrentToken;
+      }
+    }
+    return false;
+  }
+
   void Parser::parse(vector<Token> &tokens) {
     mEndToken = tokens.end();
     mCurrentToken = tokens.begin();
 
     while (mCurrentToken != mEndToken) {
-      optional<Type> possibleType = expectType();
-      if (possibleType.has_value()) {
-        optional<Token> possibleName = expectIdentifier();
-        if (possibleName.has_value()) {
-          optional<Token> possibleOperator = expectOperator("(");
-          if (possibleOperator.has_value()) {
-            cout << "We have a function!" << possibleName->mText << ".";
-            exit(0);
-          }
-        }
+      if(expectFunctionDefinition()){
+        cout << "We have a function definition." << endl;
+      } else {
+        cerr << "Error parsing token: " << mCurrentToken->mText << endl;
+        ++mCurrentToken;
       }
     }
   }
@@ -52,7 +68,6 @@ namespace simpleparser {
     Token returnToken = *mCurrentToken;
     ++mCurrentToken;
     return returnToken;
-
   }
   Parser::Parser() {
     mTypes["char"] = Type{"signed char", INT8};
@@ -64,11 +79,12 @@ namespace simpleparser {
   }
   optional<Type> Parser::expectType() {
     optional<Token> possibleType = expectIdentifier();
-    if(!possibleType.has_value()){
+    if (!possibleType.has_value()) {
       return nullopt;
     }
     map<string, Type>::iterator it = mTypes.find(possibleType->mText);
     if (it == mTypes.end()) {
+      --mCurrentToken;
       return nullopt;
     }
     return it->second;
