@@ -41,6 +41,7 @@ namespace simpleparser {
     optional<Type> expectType();
     optional<Token> expectIdentifier(const string &name = string());
     optional<Token> expectOperator(const string &name = string());
+    bool expectFunctionDefinition();
     vector<Token>::iterator mCurrentToken;
     vector<Token>::iterator mEndToken;
     map<string, Type> mTypes;
